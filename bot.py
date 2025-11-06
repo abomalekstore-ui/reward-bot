@@ -2,7 +2,7 @@ import telebot, json, os, time, threading, requests
 from flask import Flask
 
 # ========= إعدادات =========
-TOKEN = "8376936171:AAFxfdp4S4RtyCI9f-ZDUi7vMQTXEuPQUs4"   BotFather
+TOKEN = "8376936171:AAFxfdp4S4RtyCI9f-ZDUi7vMQTXEuPQUs4"
 REWARD_POINTS = 10             # عدد النقاط المطلوبة للمكافأة
 KEEPALIVE_URL = os.environ.get("KEEPALIVE_URL", None)  # رابط الخدمة على Koyeb أو Render
 PING_EVERY_SEC = 180           # كل كام ثانية نعمل self-ping
