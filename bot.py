@@ -121,3 +121,36 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     print(f"🚀 running on port {port}")
     app.run(host="0.0.0.0", port=port)
+# ================== Flask Server to Keep Alive ==================
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "<h2>✅ Reward Bot is running successfully!</h2>"
+
+def keepalive_loop():
+    url = os.environ.get("KEEPALIVE_URL")
+    if not url:
+        return
+    while True:
+        try:
+            requests.get(url)
+            print("🔁 Ping sent to keep server awake.")
+        except Exception as e:
+            print(f"⚠️ Error pinging server: {e}")
+        time.sleep(240)  # كل 4 دقائق
+
+# ================== تشغيل البوت والسيرفر ==================
+def polling_loop():
+    while True:
+        try:
+            bot.polling(non_stop=True)
+        except Exception as e:
+            print(f"⚠️ خطأ في التشغيل: {e}")
+            time.sleep(5)
+
+if __name__ == '__main__':
+    threading.Thread(target=polling_loop).start()
+    threading.Thread(target=keepalive_loop).start()
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
